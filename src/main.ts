@@ -1,17 +1,16 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
+import { BadRequestException, ValidationPipe } from '@nestjs/common';
+import { ApiResponseDto } from './common/api-response.dto';
 const allowedOrigins = [
   'http://localhost:3001',
-  'https://topline-sa.netlify.app/',
-  // Add other allowed origins if needed
+  'https://topline-sa.netlify.app',
 ];
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
     origin: (origin, callback) => {
       console.log('Origin', origin);
-      // Check if the origin is in the list of allowed origins
       if (allowedOrigins.includes(origin) || !origin) {
         console.log('Success');
         callback(null, true);
@@ -28,10 +27,20 @@ async function bootstrap() {
 
   app.useGlobalPipes(
     new ValidationPipe({
-      whitelist: false,
-      forbidNonWhitelisted: true,
-      transform: true,
-      skipMissingProperties: false,
+      exceptionFactory: (errors) => {
+        const result = errors.map((error) => ({
+          property: error.property,
+          message: error.constraints[Object.keys(error.constraints)[0]],
+        }));
+        const response = new ApiResponseDto(
+          [],
+          true,
+          result[0].message,
+          null,
+          400,
+        );
+        return new BadRequestException(response);
+      },
       stopAtFirstError: true,
     }),
   );

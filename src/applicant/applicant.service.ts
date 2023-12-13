@@ -6,8 +6,10 @@ import { DatabaseService } from 'src/database/database.service';
 export class ApplicantService {
   constructor(private readonly db: DatabaseService) {}
 
-  public async getUsers() {
-    return 'Hello World';
+  public async getUsers(): Promise<ApiResponseDto> {
+    const users = await this.db.applicant.findMany();
+
+    return new ApiResponseDto(users, false, 'Users', null, 200);
   }
 
   public async createUser(user: createApplicantDto): Promise<ApiResponseDto> {
