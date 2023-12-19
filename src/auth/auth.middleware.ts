@@ -10,7 +10,7 @@ import { CustomRequest } from 'src/interfaces/custom-request.interface';
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
   use(req: CustomRequest, res: Response, next: NextFunction) {
-    const token = req.cookies?.token;
+    const { token } = req.cookies;
     console.log(token);
     if (!token) {
       throw new UnauthorizedException('No authentication token found');
