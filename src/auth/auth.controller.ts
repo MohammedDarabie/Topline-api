@@ -60,10 +60,7 @@ export class AuthController {
       });
 
       // Set the token as a cookie
-      res.cookie('token', token, {
-        httpOnly: true, // Helps against XSS attacks
-        sameSite: 'strict', // CSRF protection
-      });
+      res.cookie('token', token);
 
       // Sending the response
       return res

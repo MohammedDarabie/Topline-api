@@ -5,6 +5,7 @@ import { ApiResponseDto } from './dto/api-response.dto';
 import * as cookieParser from 'cookie-parser';
 const allowedOrigins = [
   'http://localhost:3001',
+  'http://localhost:3000',
   'https://topline-sa.netlify.app',
 ];
 async function bootstrap() {
@@ -22,7 +23,7 @@ async function bootstrap() {
         callback(new Error('Not allowed by CORS'));
       }
     },
-    methods: ['GET,HEAD,PUT,PATCH,POST,DELETE'],
+    methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
     credentials: true,
     exposedHeaders: ['Set-Cookie'],
   });
