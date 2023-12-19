@@ -40,15 +40,7 @@ export class AuthController {
       if (!dbUser) {
         return res
           .status(401)
-          .send(
-            new ApiResponseDto(
-              null,
-              true,
-              'Invalid username or password',
-              null,
-              401,
-            ),
-          );
+          .send(new ApiResponseDto(null, true, 'Invalid username', null, 401));
       }
 
       const comparePassword = await this.comparePasswords(
@@ -58,15 +50,7 @@ export class AuthController {
       if (!comparePassword) {
         return res
           .status(401)
-          .send(
-            new ApiResponseDto(
-              null,
-              true,
-              'Invalid username or password',
-              null,
-              401,
-            ),
-          );
+          .send(new ApiResponseDto(null, true, 'Invalid password', null, 401));
       }
 
       const { id, name } = dbUser;
@@ -78,7 +62,6 @@ export class AuthController {
       // Set the token as a cookie
       res.cookie('token', token, {
         httpOnly: true, // Helps against XSS attacks
-        secure: process.env.NODE_ENV === 'production', // Use secure in production (for HTTPS)
         sameSite: 'strict', // CSRF protection
       });
 
