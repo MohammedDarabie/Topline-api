@@ -11,20 +11,20 @@ import { CustomRequest } from 'src/interfaces/custom-request.interface';
 export class AuthMiddleware implements NestMiddleware {
   use(req: CustomRequest, res: Response, next: NextFunction) {
     const token = req.cookies?.token;
-
+    console.log(token);
     if (!token) {
       throw new UnauthorizedException('No authentication token found');
     }
 
-    try {
-      const payload = jwt.verify(token, process.env.JWT_SECRET);
+    jwt.verify(token, process.env.JWT_SECRET, (err, payload) => {
+      if (err) {
+        throw new UnauthorizedException('Invalid or expired token');
+      }
       if (payload) {
         req.user = payload;
         console.log('req.user', req.user);
         next();
-      } // Add user info to request object
-    } catch (error) {
-      throw new UnauthorizedException('Invalid or expired token');
-    }
+      }
+    });
   }
 }
