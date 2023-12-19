@@ -1,22 +1,24 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { BadRequestException, ValidationPipe } from '@nestjs/common';
-import { ApiResponseDto } from './common/api-response.dto';
+import { ApiResponseDto } from './dto/api-response.dto';
+import * as cookieParser from 'cookie-parser';
 const allowedOrigins = [
   'http://localhost:3001',
   'https://topline-sa.netlify.app',
 ];
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
   app.enableCors({
     origin: (origin, callback) => {
-      console.log('Origin', origin);
+      // console.log('Origin', origin);
       if (allowedOrigins.includes(origin) || !origin) {
-        console.log('Success');
+        // console.log('Success');
         callback(null, true);
       } else {
-        console.log(origin);
-        console.log('Error');
+        // console.log(origin);
+        // console.log('Error');
         callback(new Error('Not allowed by CORS'));
       }
     },
@@ -44,6 +46,7 @@ async function bootstrap() {
       stopAtFirstError: true,
     }),
   );
+  app.use(cookieParser());
   await app.listen(3000);
 }
 bootstrap();

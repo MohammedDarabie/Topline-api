@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ApplicantService } from './applicant.service';
-import { createApplicantDto } from 'src/common/create-applicant.dto';
-import { ApiResponseDto } from 'src/common/api-response.dto';
+import { createApplicantDto } from 'src/dto/create-applicant.dto';
+import { ApiResponseDto } from 'src/dto/api-response.dto';
 
 @Controller('api/applicant')
 export class ApplicantController {

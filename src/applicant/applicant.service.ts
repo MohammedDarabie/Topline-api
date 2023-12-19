@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { ApiResponseDto } from 'src/common/api-response.dto';
-import { createApplicantDto } from 'src/common/create-applicant.dto';
+import { ApiResponseDto } from 'src/dto/api-response.dto';
+import { createApplicantDto } from 'src/dto/create-applicant.dto';
 import { DatabaseService } from 'src/database/database.service';
 @Injectable()
 export class ApplicantService {
