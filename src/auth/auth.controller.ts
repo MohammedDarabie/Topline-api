@@ -66,7 +66,13 @@ export class AuthController {
       return res
         .status(200)
         .send(
-          new ApiResponseDto({ user: payload }, false, 'Logged In', null, 200),
+          new ApiResponseDto(
+            { token, user: payload },
+            false,
+            'Logged In',
+            null,
+            200,
+          ),
         );
     } catch (error) {
       console.error(error);
