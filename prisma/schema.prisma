@@ -10,16 +10,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum ApplicationStatus {
+  ACCEPTED
+  REJECTED
+  NOT_DECIDED
+}
 
 model Applicant {
-  id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  name           String
-  dateOfBirth    String
-  nationality    String
-  cityOfResidence String
-  phoneNumber    String
-  pastWorkBrief  String
-  profilePicLink String
+  id                String            @id @default(auto()) @map("_id") @db.ObjectId
+  name              String
+  dateOfBirth       String
+  nationality       String
+  cityOfResidence   String
+  phoneNumber       String
+  pastWorkBrief     String
+  profilePicLink    String
+  applicationStatus ApplicationStatus @default(NOT_DECIDED)
 }
 
 model User {

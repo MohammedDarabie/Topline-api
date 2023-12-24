@@ -11,8 +11,8 @@ import { CustomRequest } from 'src/interfaces/custom-request.interface';
 export class AuthMiddleware implements NestMiddleware {
   use(req: CustomRequest, res: Response, next: NextFunction) {
     const token = req.cookies?.token;
-    console.log('token', token);
-    console.log(req);
+    // console.log('token', token);
+    // console.log(req);
     if (!token) {
       throw new UnauthorizedException('No authentication token found');
     }
@@ -23,7 +23,7 @@ export class AuthMiddleware implements NestMiddleware {
       }
       if (payload) {
         req.user = payload;
-        console.log('req.user', req.user);
+        // console.log('req.user', req.user);
         next();
       }
     });
