@@ -6,7 +6,7 @@ import * as cookieParser from 'cookie-parser';
 const allowedOrigins = [
   'http://localhost:3001',
   'http://localhost:3000',
-  'https://topline-sa.netlify.app',
+  'https://demo-tp.netlify.app',
 ];
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
